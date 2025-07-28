@@ -1,220 +1,44 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+    import { RouterLink, RouterView } from 'vue-router'
+    import { ref, reactive } from 'vue';
+    import TodoSpinner from './components/TodoSpinner.vue';
+    import TodoFormAdd from './components/TodoFormAdd.vue';
+    import TodoItems from './components/TodoItems.vue';
+    import TodoEmpty from './components/TodoEmpty.vue';
+    import axios from 'axios';
+    import { useStore } from 'vuex';
+
+    const store = useStore()
+
+    const loading = ref(true)
+
+    axios.get('http://localhost:3000/todos')
+        .then((response) => {
+            store.commit('storeTodos', response.data)
+        }).finally(() => {
+            loading.value = false
+        })
 </script>
 
 <template>
   <body class="bg-gray-800">
-      <!-- Content -->
       <div class="px-3 py-10 md:px-10">
           <div class="w-full sm:w-1/2 lg:w-1/3 mx-auto">
+            <TodoSpinner
+                v-if="loading"
+            ></TodoSpinner>
 
-              <!-- Todo spinner -->
-              <div class="text-center">
-                  <img
-                      src="@/assets/img/spinner.svg"
-                      alt=""
-                      class="inline-block w-5 h-5"
-                  >
-              </div>
-              <!--/ Todo spinner -->
-
-              <!-- Todo form -->
-              <form class="flex items-center px-4 bg-gray-900 h-15 
-  rounded-sm border-l-2 border-green-400 mb-3">
-                  <input
-                      placeholder="Adicione um novo item ..."
-                      type="text"
-                      class="bg-gray-900 placeholder-gray-500 text-gray-500 
-  font-light focus:outline-none block w-full appearance-none leading-normal 
-  py-3 pr-3"
-                  >
-
-                  <button
-                      class="text-green-400 text-xs font-semibold 
-  focus:outline-none"
-                      type="submit"
-                  >
-                      ADICIONAR
-                  </button>
-              </form>
-              <!--/ Todo form -->
-
-              <!-- Todo items -->
-              <div class="space-y-2">
-                  <div class="bg-gray-300 rounded-sm">
-                      <div class="flex items-center px-4 py-3 border-b 
-  border-gray-400 last:border-b-0">
-                          <div class="flex items-center justify-center 
-  mr-2">
-                              <button class="text-gray-400">
-                                  <svg class="w-5 h-5" fill="none" 
-  stroke="currentColor" viewBox="0 0 24 24" 
-  xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" 
-  stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                              </button>
-                          </div>
-
-                          <div class="w-full">
-                              <input
-                                  type="text"
-                                  placeholder="Digite a sua tarefa"
-                                  value="Estudar Vue 3"
-                                  class="bg-gray-300 placeholder-gray-500 
-  text-gray-700 font-light focus:outline-none block w-full appearance-none 
-  leading-normal mr-3"
-                              >
-                          </div>
-
-                          <div class="ml-auto flex items-center 
-  justify-center">
-                              <button class="focus:outline-none">
-                                  <svg
-                                      class="ml-3 h-4 w-4 text-gray-500"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                      <path
-                                          d="M19 7L18.1327 19.1425C18.0579 
-  20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 
-  19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 
-  3 9 3.44772 9 4V7M4 7H20"
-                                          stroke-width="2"
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                      />
-                                  </svg>
-                              </button>
-                          </div>
-                      </div>
-                  </div>
-
-                  <div class="bg-gray-300 rounded-sm">
-                      <div class="flex items-center px-4 py-3 border-b 
-  border-gray-400 last:border-b-0">
-                          <div class="flex items-center justify-center 
-  mr-2">
-                              <button class="text-green-600">
-                                  <svg class="w-5 h-5" fill="none" 
-  stroke="currentColor" viewBox="0 0 24 24" 
-  xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" 
-  stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                              </button>
-                          </div>
-
-                          <div class="w-full">
-                              <input
-                                  type="text"
-                                  placeholder="Digite a sua tarefa"
-                                  value="Estudar Vue 3"
-                                  readonly
-                                  class="line-through bg-gray-300 
-  placeholder-gray-500 text-gray-700 font-light focus:outline-none block 
-  w-full appearance-none leading-normal mr-3"
-                              >
-                          </div>
-
-                          <div class="ml-auto flex items-center 
-  justify-center">
-                              <button class="focus:outline-none">
-                                  <svg
-                                      class="ml-3 h-4 w-4 text-gray-500"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                      <path
-                                          d="M19 7L18.1327 19.1425C18.0579 
-  20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 
-  19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 
-  3 9 3.44772 9 4V7M4 7H20"
-                                          stroke-width="2"
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                      />
-                                  </svg>
-                              </button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <!--/ Todo items -->
-
-              <!-- Todo empty -->
-              <div class="text-center text-lg text-gray-500">
-                  Você ainda não tem nenhuma tarefa.
-              </div>
-              <!--/ Todo empty -->
+            <template v-else>
+                <TodoFormAdd></TodoFormAdd>
+    
+                <TodoItems></TodoItems>
+    
+                <TodoEmpty></TodoEmpty>
+            </template>
           </div>
       </div>
-      <!--/ Content -->
-
   </body>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
