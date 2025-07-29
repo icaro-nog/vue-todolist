@@ -12,12 +12,9 @@
 
     const loading = ref(true)
 
-    axios.get('http://localhost:3000/todos')
-        .then((response) => {
-            store.commit('storeTodos', response.data)
-        }).finally(() => {
-            loading.value = false
-        })
+    store.dispatch('getTodos').finally(() => {
+        loading.value = false
+    })
 </script>
 
 <template>
