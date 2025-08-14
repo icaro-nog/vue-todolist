@@ -5,32 +5,36 @@
     const title = ref('')
     const store = useStore()
 
-    async function addTodo(){
-        console.log('add chegou')
+    // async function addTodo(){
+    //     console.log('add chegou')
 
-        try {
-            await store.dispatch('addTodo', {
-                title: title.value,
-                completed: false
-            })
-            // title.value
-        } catch(error) {
-            console.error('Erro ao adicionar todo: ', error)
-        }
-    }
-    // function addTodo(){
-    //     console.log('here', title.value)
-
-    //     store.dispatch('addTodo', {
-    //         title: title.value,
-    //         completed: false
-    //     })
+    //     try {
+    //         await store.dispatch('addTodo', {
+    //             title: title.value,
+    //             completed: false
+    //         })
+    //         // title.value
+    //     } catch(error) {
+    //         console.error('Erro ao adicionar todo: ', error)
+    //     }
     // }
+    function addTodo(e){
+        console.log('here', title.value)
+
+        e.preventDefault(); // redundante, mas garante
+
+        store.dispatch('addTodo', {
+            title: title.value,
+            completed: false
+        }).catch(err => {
+            console.error('Erro na action:', err);
+        });
+    }
 </script>
 
 <template>
     <form
-        @submit.prevent.stop="addTodo"
+        @submit.prevent="addTodo"
         class="flex items-center px-4 bg-gray-900 h-15 
         rounded-sm border-l-2 border-green-400 mb-3"
     >
