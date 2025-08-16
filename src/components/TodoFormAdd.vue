@@ -5,29 +5,19 @@
     const title = ref('')
     const store = useStore()
 
-    // async function addTodo(){
-    //     console.log('add chegou')
+    function addTodo(){
 
-    //     try {
-    //         await store.dispatch('addTodo', {
-    //             title: title.value,
-    //             completed: false
-    //         })
-    //         // title.value
-    //     } catch(error) {
-    //         console.error('Erro ao adicionar todo: ', error)
-    //     }
-    // }
-    function addTodo(e){
-        console.log('here', title.value)
-
-        e.preventDefault(); // redundante, mas garante
+        if(!title.value){
+            return false;
+        }
 
         store.dispatch('addTodo', {
             title: title.value,
             completed: false
         }).catch(err => {
             console.error('Erro na action:', err);
+        }).finally(() => {
+            title.value = ''
         });
     }
 </script>

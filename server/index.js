@@ -20,8 +20,15 @@ app.get("/todos", async (req, res) => {
 // Adicionar dado
 app.post("/todos", async (req, res) => {
   await db.read();
-  db.data.todos.push(req.body);
-  await db.write();
+
+  // gerar id incremental para todo
+  const todos = db.data.todos
+  const newId = todos.length ? Math.max(...todos.map(t => t.id)) + 1 : 1
+  const newTodo = { id: newId, ...req.body }
+
+  todos.push(newTodo)
+  await db.write()
+
   res.status(201).json(req.body);
 });
 
