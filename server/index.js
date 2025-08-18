@@ -17,6 +17,39 @@ app.get("/todos", async (req, res) => {
   res.json(db.data.todos);
 });
 
+app.get("/todos/:id", async (req, res) => {
+  await db.read();
+
+  const id = parseInt(req.params.id); // pega o id da URL e converte p/ número
+  const todo = db.data.todos.find(t => t.id === id);
+
+  if (todo) {
+    res.json(todo);
+  } else {
+    res.status(404).json({ error: "Todo não encontrado" });
+  }
+});
+
+app.put("/todos/:id", async (req, res) => {
+  await db.read();
+
+  const id = parseInt(req.params.id); // ID vindo da URL
+  const index = db.data.todos.findIndex(t => t.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: "Todo não encontrado" });
+  }
+
+  // atualiza apenas os campos enviados no body
+  db.data.todos[index].title = req.body.todo.title;
+  db.data.todos[index].completed = req.body.todo.completed;
+
+  await db.write(); // salva no arquivo
+
+  res.json(db.data.todos[index]);
+});
+
+
 // Adicionar dado
 app.post("/todos", async (req, res) => {
   await db.read();

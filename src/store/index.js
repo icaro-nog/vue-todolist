@@ -27,6 +27,13 @@ export default createStore({
             axios.post('http://localhost:3000/todos', data).then((response) => {
                 this.commit('storeTodo', response.data)
             })
+        },
+
+        updateTodo(context, data){
+            axios.put(`http://localhost:3000/todos/${data.value.id}`, data.value)
+            // .then((response) => {
+            //     commit('storeTodo', response.data)
+            // })
         }
     },
     getters: {

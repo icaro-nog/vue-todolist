@@ -2,12 +2,12 @@
   "todos": [
     {
       "id": 1,
-      "title": "Estudar javascript",
+      "title": "alterada",
       "completed": true
     },
     {
       "id": 2,
-      "title": "Estudar Vue",
+      "title": "Estudar Vue 3",
       "completed": false
     },
     {
