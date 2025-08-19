@@ -49,6 +49,24 @@ app.put("/todos/:id", async (req, res) => {
   res.json(db.data.todos[index]);
 });
 
+// deletar tarefa
+app.delete("/todos/:id", async (req, res) => {
+  await db.read();
+
+  const idTodo = parseInt(req.params.id); // ID vindo da URL
+  const index = db.data.todos.findIndex(t => t.id === idTodo);
+
+  if (index === -1) {
+    return res.status(404).json({ error: "Todo não encontrado" });
+  }
+
+  db.data.todos = db.data.todos.filter(t => t.id !== idTodo);
+
+  await db.write(); // salva no arquivo
+
+  res.status(200).send('Tarefa deletada com sucesso!')
+});
+
 
 // Adicionar dado
 app.post("/todos", async (req, res) => {

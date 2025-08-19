@@ -2,62 +2,32 @@
   "todos": [
     {
       "id": 1,
-      "title": "alterada",
-      "completed": true
+      "title": "nva",
+      "completed": false
     },
     {
       "id": 2,
-      "title": "Estudar Vue 3",
-      "completed": false
+      "title": "lll",
+      "completed": true
     },
     {
       "id": 3,
-      "title": "kkkkkkkkkk",
-      "completed": false
+      "title": "sdsadasd",
+      "completed": true
     },
     {
       "id": 4,
-      "title": "teste",
+      "title": "çççç",
       "completed": false
     },
     {
       "id": 5,
-      "title": "aaaaaaaaa",
+      "title": "sadsadasd",
       "completed": false
     },
     {
       "id": 6,
-      "title": "hhh",
-      "completed": false
-    },
-    {
-      "id": 7,
-      "title": "abc",
-      "completed": false
-    },
-    {
-      "id": 8,
-      "title": "abc",
-      "completed": false
-    },
-    {
-      "id": 9,
-      "title": "",
-      "completed": false
-    },
-    {
-      "id": 10,
-      "title": "d",
-      "completed": false
-    },
-    {
-      "id": 11,
-      "title": "tarefa",
-      "completed": false
-    },
-    {
-      "id": 12,
-      "title": "add",
+      "title": "dfsadf",
       "completed": false
     }
   ]

@@ -5,6 +5,7 @@
 
     const store = useStore();
     const payload = ref();
+    const todoId = ref();
 
     // recebendo :todo e mostrando no v-model="title"
     const props = defineProps({
@@ -40,6 +41,12 @@
         store.dispatch('updateTodo', payload)
     }
 
+    function deleteTodo(){
+        todoId.value = props.todo.id
+        
+        store.dispatch('deleteTodo', todoId.value)
+    }
+
 
     const isCompleted = ref(props.todo.completed)
     const title = ref(props.todo.title)
@@ -48,10 +55,8 @@
 
 <template>
     <div class="bg-gray-300 rounded-sm">
-            <div class="flex items-center px-4 py-3 border-b 
-border-gray-400 last:border-b-0">
-                <div class="flex items-center justify-center 
-mr-2">
+            <div class="flex items-center px-4 py-3 border-b border-gray-400 last:border-b-0">
+                <div class="flex items-center justify-center mr-2">
                     <button 
                         :class="{
                             'text-green-700' : isCompleted,
@@ -78,9 +83,11 @@ mr-2">
                     >
                 </div>
 
-                <div class="ml-auto flex items-center 
-justify-center">
-                    <button class="focus:outline-none">
+                <div class="ml-auto flex items-center justify-center">
+                    <button 
+                        class="focus:outline-none"
+                        @click="deleteTodo()"
+                    >
                         <svg
                             class="ml-3 h-4 w-4 text-gray-500"
                             viewBox="0 0 24 24"
@@ -90,9 +97,9 @@ justify-center">
                         >
                             <path
                                 d="M19 7L18.1327 19.1425C18.0579 
-20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 
-19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 
-3 9 3.44772 9 4V7M4 7H20"
+                                20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 
+                                19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 
+                                3 9 3.44772 9 4V7M4 7H20"
                                 stroke-width="2"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
