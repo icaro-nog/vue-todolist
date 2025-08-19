@@ -12,6 +12,7 @@ export default createStore({
 
         storeTodo(state, payload){
             const index = state.todos.findIndex(todo => todo.id === payload.id)
+
             if(index >= 0){
                 // removendo um item na posição de index e substituindo pelo valor vindo do payload
                 state.todos.splice(index, 1, payload)

@@ -80,7 +80,7 @@ app.post("/todos", async (req, res) => {
   todos.push(newTodo)
   await db.write()
 
-  res.status(201).json(req.body);
+  res.status(201).json(newTodo);
 });
 
 // Iniciar servidor
